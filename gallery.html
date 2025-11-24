@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Галерея - Job Board</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: #f8f9fa;
+        }
+        
+        /* Header Styles */
+        header {
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #00D363;
+            text-decoration: none;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-menu li {
+            margin: 0 15px;
+        }
+        
+        .nav-menu a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            color: #00D363;
+        }
+        
+        .header-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .btn-login {
+            padding: 8px 20px;
+            border: 1px solid #00D363;
+            color: #00D363;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        
+        .btn-post {
+            padding: 8px 20px;
+            background: #00D363;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        
+        .btn-login:hover {
+            background: #00D363;
+            color: white;
+        }
+        
+        .btn-post:hover {
+            background: #00c158;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #00D363 0%, #00b8a9 100%);
+            color: white;
+            padding: 120px 0 80px;
+            text-align: center;
+            margin-top: 70px;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Gallery Styles */
+        .gallery-section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 36px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            color: #666;
+            font-size: 18px;
+        }
+        
+        .gallery-filters {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 10px 25px;
+            border: 2px solid #00D363;
+            background: white;
+            color: #00D363;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: #00D363;
+            color: white;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .gallery-item {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .gallery-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .gallery-content {
+            padding: 20px;
+        }
+        
+        .gallery-content h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+        
+        .gallery-content p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        /* Lightbox Styles */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .lightbox.active {
+            display: flex;
+        }
+        
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+        
+        .lightbox-img {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 10px;
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        
+        .lightbox-caption {
+            color: white;
+            text-align: center;
+            margin-top: 15px;
+            font-size: 16px;
+        }
+        
+        /* Footer */
+        footer {
+            background: #001D38;
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 20px;
+            color: #00D363;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: #00D363;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #334155;
+            color: #94a3b8;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-buttons {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">JobBoard</a>
+            
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="jobs.html">Browse Job</a></li>
+                <li><a href="gallery.html" class="active">Gallery</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            
+            <div class="header-buttons">
+                <a href="#" class="btn-login">Log in</a>
+                <a href="#" class="btn-post">Post a Job</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Our Gallery</h1>
+        <p>Explore our modern workspaces, team collaborations, and company culture</p>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery-section">
+        <div class="section-title">
+            <h2>Work Environment Gallery</h2>
+            <p>Discover our professional spaces and team activities</p>
+        </div>
+        
+        <div class="gallery-filters">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="workspace">Workspace</button>
+            <button class="filter-btn" data-filter="team">Team</button>
+            <button class="filter-btn" data-filter="events">Events</button>
+            <button class="filter-btn" data-filter="office">Office</button>
+        </div>
+        
+        <div class="gallery-grid">
+            <!-- Image 1 -->
+            <div class="gallery-item" data-category="workspace">
+                <img src="images/modern-workspace-design.jpg" alt="Modern workspace design" class="gallery-img">
+                <div class="gallery-content">
+                    <h3>Modern Workspace</h3>
+                    <p>Our contemporary office design with ergonomic furniture</p>
+                </div>
+            </div>
+            
+            <!-- Image 2 -->
+            <div class="gallery-item" data-category="team">
+                <img src="images/team-brainstorming-session.jpg" alt="Team brainstorming session" class="gallery-img">
+                <div class="gallery-content">
+                    <h3>Team Collaboration</h3>
+                    <p>Creative brainstorming session with our project team</p>
+                </div>
+            </div>
+            
+            <!-- Image 3 -->
+            <div class="gallery-item" data-category="events">
+                <img src="images/company-team-building-event.jpg" alt="Company team building event" class="gallery-img">
+                <div class="gallery-content">
+                    <h3>Team Building</h3>
+                    <p>Annual team building activities for employee engagement</p>
+                </div>
+            </div>
+            
+            <!-- Image 4 -->
+            <div class="gallery-item" data-category="workspace">
+                <img src="images/creative-workspace-environment.jpg" alt="Creative workspace environment" class="gallery-img">
+                <div class="gallery-content">
+                    <h3>Creative Space</h3>
+                    <p>Innovative workspace designed for creativity and focus</p>
+                </div>
+            </div>
+            
+            <!-- Image 5 -->
+            <div class="gallery-item" data-category="office">
+                <img src="images/modern-office-reception-area.jpg" alt="Modern office reception area" class="gallery-img">
+                <div class="gallery-content">
+                    <h3>Reception Area</h3>
+                    <p>Welcoming reception with contemporary design elements</p>
+                </div>
+            </div>
+            
+            <!-- Image 6 -->
+            <div class="gallery-item" data-category="team">
+                <img src="images/project-team-meeting-room.jpg" alt="Project team in meeting room" class="gallery-img">
+                <div class="gallery-content">
+                    <h3>Team Meeting</h3>
+                    <p>Project team discussing strategy in conference room</p>
+                </div>
+            </div>
+            
+            <!-- Image 7 -->
+            <div class="gallery-item" data-category="events">
+                <img src="images/company-annual-conference.jpg" alt="Company annual conference" class="gallery-img">
+                <div class="gallery-content">
+                    <h3>Annual Conference</h3>
+                    <p>Keynote presentation at our yearly company event</p>
+                </div>
+            </div>
+            
+            <!-- Image 8 -->
+            <div class="gallery-item" data-category="workspace">
+                <img src="images/comfortable-breakout-area.jpg" alt="Comfortable breakout area" class="gallery-img">
+                <div class="gallery-content">
+                    <h3>Breakout Area</h3>
+                    <p>Relaxed space for informal meetings and coffee breaks</p>
+                </div>
+            </div>
+            
+            <!-- Image 9 -->
+            <div class="gallery-item" data-category="office">
+                <img src="images/modern-cafeteria-design.jpg" alt="Modern cafeteria design" class="gallery-img">
+                <div class="gallery-content">
+                    <h3>Employee Cafeteria</h3>
+                    <p>Spacious cafeteria with healthy food options for staff</p>
+                </div>
+            </div>
+            
+            <!-- Image 10 -->
+            <div class="gallery-item" data-category="team">
+                <img src="images/training-workshop-session.jpg" alt="Training workshop session" class="gallery-img">
+                <div class="gallery-content">
+                    <h3>Training Workshop</h3>
+                    <p>Professional development session for skill enhancement</p>
+                </div>
+            </div>
+            
+            <!-- Image 11 -->
+            <div class="gallery-item" data-category="events">
+                <img src="images/company-holiday-party.jpg" alt="Company holiday party" class="gallery-img">
+                <div class="gallery-content">
+                    <h3>Holiday Celebration</h3>
+                    <p>Annual holiday party with all company employees</p>
+                </div>
+            </div>
+            
+            <!-- Image 12 -->
+            <div class="gallery-item" data-category="workspace">
+                <img src="images/focused-work-station.jpg" alt="Focused work station" class="gallery-img">
+                <div class="gallery-content">
+                    <h3>Work Station</h3>
+                    <p>Individual station designed for concentration and focus</p>
+                </div>
+            </div>
+            
+            <!-- Image 13 -->
+            <div class="gallery-item" data-category="office">
+                <img src="images/executive-conference-room.jpg" alt="Executive conference room" class="gallery-img">
+                <div class="gallery-content">
+                    <h3>Conference Room</h3>
+                    <p>Premium space for important client and team meetings</p>
+                </div>
+            </div>
+            
+            <!-- Image 14 -->
+            <div class="gallery-item" data-category="team">
+                <img src="images/cross-department-collaboration.jpg" alt="Cross-department collaboration" class="gallery-img">
+                <div class="gallery-content">
+                    <h3>Department Collaboration</h3>
+                    <p>Employees from different teams working together</p>
+                </div>
+            </div>
+            
+            <!-- Image 15 -->
+            <div class="gallery-item" data-category="events">
+                <img src="images/employee-appreciation-day.jpg" alt="Employee appreciation day" class="gallery-img">
+                <div class="gallery-content">
+                    <h3>Employee Appreciation</h3>
+                    <p>Special event recognizing outstanding contributions</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <button class="lightbox-close">&times;</button>
+            <img src="" alt="" class="lightbox-img">
+            <div class="lightbox-caption"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>JobBoard</h3>
+                <p>Find your dream job with our advanced platform</p>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Company</h3>
+                <ul>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Press</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <p>Email: info@jobboard.com</p>
+                <p>Phone: +1 (555) 123-4567</p>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2024 JobBoard. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Lightbox functionality
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = lightbox.querySelector('.lightbox-img');
+        const lightboxCaption = lightbox.querySelector('.lightbox-caption');
+        const closeBtn = lightbox.querySelector('.lightbox-close');
+        
+        // Open lightbox when clicking on gallery images
+        document.querySelectorAll('.gallery-img').forEach(img => {
+            img.addEventListener('click', () => {
+                lightboxImg.src = img.src;
+                lightboxCaption.textContent = img.alt;
+                lightbox.classList.add('active');
+            });
+        });
+        
+        // Close lightbox
+        closeBtn.addEventListener('click', () => {
+            lightbox.classList.remove('active');
+        });
+        
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                lightbox.classList.remove('active');
+            }
+        });
+        
+        // Filter functionality
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterBtns.forEach(b => b.classList.remove('active'));
+                // Add active class to clicked button
+                btn.classList.add('active');
+                
+                const filter = btn.getAttribute('data-filter');
+                
+                galleryItems.forEach(item => {
+                    if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
