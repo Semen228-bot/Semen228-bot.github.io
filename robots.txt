@@ -6,5 +6,8 @@ Disallow: /administrator/
 Crawl-delay: 1
 
 Sitemap: https://semen228-bot.github.io/sitemap.xml
+Sitemap: https://semen228-bot.github.io/sitemap-image.xml
+Sitemap: https://semen228-bot.github.io/sitemap_google.xml
+
 
 
