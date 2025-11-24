@@ -1,7 +1,7 @@
 User-agent: *
-Disallow: /gallery/
 Disallow: /admin/
 Disallow: /admin.php
 Disallow: /administrator/
 
 Sitemap: https://semen228-bot.github.io/sitemap.xml
+
