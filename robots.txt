@@ -3,5 +3,8 @@ Disallow: /admin/
 Disallow: /admin.php
 Disallow: /administrator/
 
+Crawl-delay: 1
+
 Sitemap: https://semen228-bot.github.io/sitemap.xml
+
 
