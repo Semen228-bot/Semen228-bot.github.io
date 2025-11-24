@@ -302,6 +302,118 @@
     </div>
 </section>
 
+
+    <!-- Gallery Preview Section -->
+<section class="gallery-preview">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="gallery-preview-box">
+                    <h2 class="gallery-preview-title">Explore Our Work Environment</h2>
+                    <p class="gallery-preview-text">
+                        Discover our modern offices, collaborative spaces, and vibrant company culture. 
+                        See where innovation happens and teams thrive.
+                    </p>
+                    
+                    <div class="gallery-preview-images">
+                        <div class="preview-image">
+                            <img src="images/modern-workspace-design.jpg" alt="Modern workspace design">
+                        </div>
+                        <div class="preview-image">
+                            <img src="images/team-brainstorming-session.jpg" alt="Team brainstorming session">
+                        </div>
+                        <div class="preview-image">
+                            <img src="images/company-team-building-event.jpg" alt="Company team building">
+                        </div>
+                    </div>
+                    
+                    <a href="gallery.html" class="btn-gallery">
+                        View Full Gallery
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.gallery-preview {
+    padding: 80px 0;
+    background: #f8f9fa;
+}
+.gallery-preview-box {
+    background: white;
+    padding: 50px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    text-align: center;
+}
+.gallery-preview-title {
+    font-size: 32px;
+    color: #001D38;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+.gallery-preview-text {
+    font-size: 16px;
+    color: #727272;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+.gallery-preview-images {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 30px;
+}
+.preview-image {
+    border-radius: 10px;
+    overflow: hidden;
+    height: 150px;
+}
+.preview-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+.preview-image:hover img {
+    transform: scale(1.05);
+}
+.btn-gallery {
+    background: #00D363;
+    color: white;
+    padding: 12px 35px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 500;
+    display: inline-block;
+    transition: all 0.3s ease;
+    border: 2px solid #00D363;
+}
+.btn-gallery:hover {
+    background: transparent;
+    color: #00D363;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 211, 99, 0.3);
+}
+
+@media (max-width: 768px) {
+    .gallery-preview-images {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    .preview-image {
+        height: 120px;
+    }
+    .gallery-preview-box {
+        padding: 30px 20px;
+    }
+    .gallery-preview-title {
+        font-size: 28px;
+    }
+}
+</style>
     
     <!-- job_listing_area_start  -->
     <div class="job_listing_area">
