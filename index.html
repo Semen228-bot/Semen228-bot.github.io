@@ -42,6 +42,178 @@
 
     <link rel="stylesheet" href="css/style.css">
     <!-- <link rel="stylesheet" href="css/responsive.css"> -->
+    
+    <!-- Дополнительные стили для соцкнопок и поиска -->
+    <style>
+        /* Стили для кнопок социальных сетей */
+        .social-integration {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            min-width: 160px;
+            border: 2px solid transparent;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .social-btn i {
+            margin-right: 8px;
+            font-size: 16px;
+        }
+        
+        .share42-btn {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+        }
+        
+        .share42-btn:hover {
+            background: linear-gradient(45deg, #2a5298, #1e3c72);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(42, 82, 152, 0.3);
+            color: white;
+        }
+        
+        .yandex-btn {
+            background: linear-gradient(45deg, #ffcc00, #ff3333);
+            color: white;
+        }
+        
+        .yandex-btn:hover {
+            background: linear-gradient(45deg, #ff3333, #ffcc00);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 51, 51, 0.3);
+            color: white;
+        }
+        
+        /* Стили для улучшенной формы поиска */
+        .enhanced-search-container {
+            position: relative;
+            width: 100%;
+            margin: 20px 0 30px 0;
+        }
+        
+        .enhanced-search-form {
+            display: flex;
+            background: white;
+            border-radius: 50px;
+            padding: 5px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 2px solid #00D363;
+        }
+        
+        .enhanced-search-input {
+            flex: 1;
+            border: none;
+            padding: 18px 25px;
+            font-size: 16px;
+            border-radius: 50px 0 0 50px;
+            outline: none;
+        }
+        
+        .enhanced-search-btn {
+            background: #00D363;
+            color: white;
+            border: none;
+            padding: 0 35px;
+            border-radius: 0 50px 50px 0;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .enhanced-search-btn:hover {
+            background: #00b359;
+        }
+        
+        .search-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-top: 10px;
+            display: none;
+            z-index: 1000;
+        }
+        
+        .search-suggestion {
+            padding: 12px 20px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .search-suggestion:hover {
+            background: #f8f9fa;
+            color: #00D363;
+        }
+        
+        .search-suggestion:last-child {
+            border-bottom: none;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .social-btn {
+                min-width: 140px;
+                padding: 10px 20px;
+                font-size: 13px;
+            }
+            
+            .enhanced-search-form {
+                flex-direction: column;
+                border-radius: 15px;
+                padding: 10px;
+            }
+            
+            .enhanced-search-input {
+                border-radius: 10px;
+                margin-bottom: 10px;
+            }
+            
+            .enhanced-search-btn {
+                border-radius: 10px;
+                padding: 15px;
+            }
+            
+            .social-integration {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .social-btn {
+                width: 100%;
+                max-width: 250px;
+            }
+        }
+        
+        /* Анимации */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .social-btn, .enhanced-search-form {
+            animation: fadeIn 0.5s ease-out;
+        }
+    </style>
+    
      <!-- Schema.org WebSite -->
     <script type="application/ld+json">
     {
@@ -111,8 +283,28 @@
                                 <div class="mobile_menu d-block d-lg-none"></div>
                             </div>
                         </div>
+                        
+                        <!-- Улучшенная форма поиска в шапке -->
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <div class="enhanced-search-container">
+                                    <form class="enhanced-search-form" id="enhancedSearchForm" onsubmit="handleEnhancedSearch(event)">
+                                        <input 
+                                            type="text" 
+                                            class="enhanced-search-input" 
+                                            placeholder="Искать вакансии: 'Разработчик', 'Менеджер', 'Дизайнер'..." 
+                                            id="enhancedSearchInput"
+                                            autocomplete="off"
+                                        >
+                                        <button type="submit" class="enhanced-search-btn">
+                                            <i class="fa fa-search"></i> Найти вакансии
+                                        </button>
+                                    </form>
+                                    <div class="search-suggestions" id="searchSuggestions"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -130,7 +322,28 @@
                             <h3 class="wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".3s">
 Find your Dream Job in Miass</h3>
                             <p class="wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".4s">We provide online instant cash loans with quick approval that suit your term length</p>
-                            <div class="sldier_btn wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".5s">
+                            
+                            <!-- Кнопки социальных сетей в слайдере -->
+                            <div class="social-integration wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".5s">
+                                <a 
+                                    href="http://share42.com/ru" 
+                                    target="_blank" 
+                                    class="social-btn share42-btn"
+                                    aria-label="Поделиться через Share42"
+                                >
+                                    <i class="fa fa-share-alt"></i> Поделиться
+                                </a>
+                                <a 
+                                    href="https://yandex.ru/dev/share/" 
+                                    target="_blank" 
+                                    class="social-btn yandex-btn"
+                                    aria-label="Поделиться через Яндекс"
+                                >
+                                    <i class="fa fa-users"></i> Яндекс.Поделиться
+                                </a>
+                            </div>
+                            
+                            <div class="sldier_btn wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".6s">
                                 <a href="#" class="boxed-btn3">Upload your Resume</a>
                             </div>
                         </div>
@@ -259,6 +472,30 @@ Find your Dream Job in Miass</h3>
                     </div>
                 </div>
             </div>
+            
+            <!-- Кнопки социальных сетей в разделе категорий -->
+            <div class="row mt-5">
+                <div class="col-12">
+                    <div class="social-integration">
+                        <a 
+                            href="http://share42.com/ru" 
+                            target="_blank" 
+                            class="social-btn share42-btn"
+                            aria-label="Поделиться через Share42"
+                        >
+                            <i class="fa fa-share-alt"></i> Поделиться вакансиями
+                        </a>
+                        <a 
+                            href="https://yandex.ru/dev/share/" 
+                            target="_blank" 
+                            class="social-btn yandex-btn"
+                            aria-label="Поделиться через Яндекс"
+                        >
+                            <i class="fa fa-users"></i> Поделиться с друзьями
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <!-- popular_catagory_area_end  -->
@@ -333,6 +570,26 @@ Find your Dream Job in Miass</h3>
                     <a href="gallery.html" class="btn-gallery">
                         View Full Gallery
                     </a>
+                    
+                    <!-- Кнопки социальных сетей в галерее -->
+                    <div class="social-integration mt-4">
+                        <a 
+                            href="http://share42.com/ru" 
+                            target="_blank" 
+                            class="social-btn share42-btn"
+                            aria-label="Поделиться галереей через Share42"
+                        >
+                            <i class="fa fa-share-alt"></i> Поделиться фото
+                        </a>
+                        <a 
+                            href="https://yandex.ru/dev/share/" 
+                            target="_blank" 
+                            class="social-btn yandex-btn"
+                            aria-label="Поделиться галереей через Яндекс"
+                        >
+                            <i class="fa fa-users"></i> Показать друзьям
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -894,31 +1151,27 @@ Find your Dream Job in Miass</h3>
                                 +10 873 672 6782 <br>
                                 600/D, Green road, NewYork
                             </p>
-                            <div class="socail_links">
-                                <ul>
-                                    <li>
-                                        <a href="#">
-                                            <i class="ti-facebook"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-google-plus"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-twitter"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-instagram"></i>
-                                        </a>
-                                    </li>
-                                </ul>
+                            
+                            <!-- Кнопки социальных сетей в футере -->
+                            <div class="social-integration">
+                                <a 
+                                    href="http://share42.com/ru" 
+                                    target="_blank" 
+                                    class="social-btn share42-btn"
+                                    aria-label="Поделиться сайтом через Share42"
+                                >
+                                    <i class="fa fa-share-alt"></i> Поделиться
+                                </a>
+                                <a 
+                                    href="https://yandex.ru/dev/share/" 
+                                    target="_blank" 
+                                    class="social-btn yandex-btn"
+                                    aria-label="Поделиться сайтом через Яндекс"
+                                >
+                                    <i class="fa fa-users"></i> Яндекс
+                                </a>
                             </div>
-
+                            
                         </div>
                     </div>
                     <div class="col-xl-2 col-md-6 col-lg-2">
@@ -1013,6 +1266,104 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
 
     <script src="js/main.js"></script>
+    
+    <!-- Дополнительный JavaScript для улучшенного поиска -->
+    <script>
+        // Обработка улучшенной формы поиска
+        function handleEnhancedSearch(event) {
+            event.preventDefault();
+            const searchQuery = document.getElementById('enhancedSearchInput').value.trim();
+            
+            if (searchQuery) {
+                // В реальном проекте здесь будет перенаправление на страницу поиска
+                // или AJAX-запрос для отображения результатов
+                alert(`Поиск выполнен: "${searchQuery}"\n\nРезультаты поиска будут отображены на странице вакансий.`);
+                
+                // Перенаправление на страницу поиска (в реальном проекте)
+                // window.location.href = `jobs.html?search=${encodeURIComponent(searchQuery)}`;
+            } else {
+                alert('Пожалуйста, введите поисковый запрос');
+                document.getElementById('enhancedSearchInput').focus();
+            }
+        }
+        
+        // Подсказки для поиска
+        const searchSuggestions = [
+            "Разработчик Python",
+            "Менеджер проектов",
+            "Дизайнер UI/UX",
+            "Аналитик данных",
+            "Маркетолог",
+            "Бухгалтер",
+            "Юрист",
+            "Инженер",
+            "Контент-менеджер",
+            "Системный администратор"
+        ];
+        
+        // Обработка ввода в поле поиска
+        document.getElementById('enhancedSearchInput').addEventListener('input', function(e) {
+            const input = e.target.value.trim();
+            const suggestionsContainer = document.getElementById('searchSuggestions');
+            
+            if (input.length > 1) {
+                // Фильтруем подсказки
+                const filteredSuggestions = searchSuggestions.filter(suggestion =>
+                    suggestion.toLowerCase().includes(input.toLowerCase())
+                );
+                
+                // Отображаем подсказки
+                if (filteredSuggestions.length > 0) {
+                    suggestionsContainer.innerHTML = filteredSuggestions
+                        .map(suggestion => 
+                            `<div class="search-suggestion" onclick="selectSuggestion('${suggestion}')">${suggestion}</div>`
+                        )
+                        .join('');
+                    suggestionsContainer.style.display = 'block';
+                } else {
+                    suggestionsContainer.style.display = 'none';
+                }
+            } else {
+                suggestionsContainer.style.display = 'none';
+            }
+        });
+        
+        // Выбор подсказки
+        function selectSuggestion(suggestion) {
+            document.getElementById('enhancedSearchInput').value = suggestion;
+            document.getElementById('searchSuggestions').style.display = 'none';
+            document.getElementById('enhancedSearchInput').focus();
+        }
+        
+        // Скрытие подсказок при клике вне поля поиска
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.enhanced-search-container')) {
+                document.getElementById('searchSuggestions').style.display = 'none';
+            }
+        });
+        
+        // Обработка клавиши Enter в поле поиска
+        document.getElementById('enhancedSearchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                handleEnhancedSearch(e);
+            }
+        });
+        
+        // Фокус на поле поиска при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('enhancedSearchInput').focus();
+        });
+        
+        // Анимация для кнопок социальных сетей
+        document.querySelectorAll('.social-btn').forEach(button => {
+            button.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-3px)';
+            });
+            
+            button.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
 </body>
-
 </html>
