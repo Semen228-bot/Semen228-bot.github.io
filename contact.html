@@ -130,17 +130,122 @@
         </div>
     </div>
     <!--/ bradcam_area  -->
- <!-- ================ contact section start ================= -->
+<!-- ================ contact section start ================= -->
 <section class="contact-section section_padding">
     <div class="container">
         <div class="d-none d-sm-block mb-5 pb-4">
-            <!-- Ссылка на интерактивную карту Яндекса -->
-            <a href="https://yandex.ru/maps/?pt=60.1078,55.0447&z=15&l=map" target="_blank" rel="noopener noreferrer" style="display: block; height: 480px;">
-                <!-- Статическое изображение карты -->
-                <img src="https://static-maps.yandex.ru/1.x/?ll=60.1078,55.0447&z=15&size=650,480&l=map&pt=60.1078,55.0447,pm2rdm" 
-                     alt="Карта Миасса, ул. Готвальда" 
-                     style="width:100%; height:100%; object-fit:cover;">
-            </a>
+            <!-- Карта Миасса с изображением -->
+            <div id="map" style="height: 480px; position: relative; overflow: hidden; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                <a href="https://yandex.ru/maps/11115/miass/?ll=60.107800%2C55.044700&z=15" 
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   style="display: block; width: 100%; height: 100%; text-decoration: none; position: relative;">
+                    
+                    <!-- Изображение карты Миасса -->
+                    <img src="img/miass-map.jpg" 
+                         alt="Карта Миасса, ул. Готвальда" 
+                         style="width: 100%; height: 100%; object-fit: cover;"
+                         onerror="this.onerror=null; this.src='https://via.placeholder.com/1200x480/4A6CF7/FFFFFF?text=Карта+Миасса%2C+ул.+Готвальда'; this.alt='Карта Миасса'">
+                    
+                    <!-- Затемнение для лучшей читаемости текста -->
+                    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+                                background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.3) 100%);">
+                    </div>
+                    
+                    <!-- Информационная панель поверх карты -->
+                    <div style="position: absolute; bottom: 0; left: 0; right: 0; 
+                                background: rgba(255, 255, 255, 0.95); padding: 20px; 
+                                backdrop-filter: blur(5px); border-top: 3px solid #4A6CF7;">
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <div style="width: 50px; height: 50px; background: #4A6CF7; border-radius: 50%; 
+                                        display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+                                        box-shadow: 0 4px 8px rgba(74, 108, 247, 0.3);">
+                                <i class="ti-location-pin" style="color: white; font-size: 24px;"></i>
+                            </div>
+                            <div>
+                                <h4 style="margin: 0 0 8px 0; color: #333; font-weight: 600; font-size: 18px;">
+                                    Наш офис в Миассе
+                                </h4>
+                                <p style="margin: 0; color: #666; font-size: 14px; line-height: 1.5;">
+                                    <strong>Адрес:</strong> ул. Готвальда, Миасс, Челябинская область, Россия<br>
+                                    <strong>Телефон:</strong> +7 (3513) 12-34-56<br>
+                                    <span style="color: #4A6CF7; font-weight: 500; display: inline-block; margin-top: 5px;">
+                                        <i class="ti-arrow-right" style="margin-right: 5px;"></i>
+                                        Нажмите для открытия интерактивной карты
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Маркер на карте (анимированный) -->
+                    <div style="position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); z-index: 2;">
+                        <div style="position: relative; animation: pulse 2s infinite;">
+                            <div style="width: 50px; height: 50px; background: #4A6CF7; border-radius: 50%; 
+                                        display: flex; align-items: center; justify-content: center;
+                                        box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
+                                <div style="width: 20px; height: 20px; background: white; border-radius: 50%;"></div>
+                            </div>
+                            <div style="position: absolute; top: -10px; left: -10px; width: 70px; height: 70px; 
+                                        border: 2px solid #4A6CF7; border-radius: 50%; 
+                                        animation: ripple 2s infinite;"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Всплывающая подсказка при наведении -->
+                    <div style="position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.9); 
+                                padding: 8px 12px; border-radius: 20px; font-size: 12px; color: #666;
+                                box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 5px;">
+                        <i class="ti-hand-point-up" style="color: #4A6CF7;"></i>
+                        Кликните для детальной карты
+                    </div>
+                </a>
+            </div>
+            
+            <!-- Стили для анимаций -->
+            <style>
+                @keyframes pulse {
+                    0% { transform: translate(-50%, -50%) scale(1); }
+                    50% { transform: translate(-50%, -50%) scale(1.05); }
+                    100% { transform: translate(-50%, -50%) scale(1); }
+                }
+                
+                @keyframes ripple {
+                    0% { transform: scale(1); opacity: 0.7; }
+                    100% { transform: scale(1.5); opacity: 0; }
+                }
+                
+                #map {
+                    transition: all 0.3s ease;
+                }
+                
+                #map:hover {
+                    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+                    transform: translateY(-2px);
+                }
+                
+                #map img {
+                    transition: transform 0.5s ease;
+                }
+                
+                #map:hover img {
+                    transform: scale(1.02);
+                }
+                
+                #map a:hover .ti-arrow-right {
+                    animation: arrowMove 0.5s ease infinite alternate;
+                }
+                
+                @keyframes arrowMove {
+                    from { transform: translateX(0); }
+                    to { transform: translateX(5px); }
+                }
+            </style>
+            
+            <!-- Резервное изображение, если основное не загрузилось -->
+            <noscript>
+                <img src="img/miass-map.jpg" alt="Карта Миасса" style="width:100%; height:auto; border-radius:8px;">
+            </noscript>
         </div>
 
         <div class="row">
@@ -187,7 +292,8 @@
                 <div class="media contact-info">
                     <span class="contact-info__icon"><i class="ti-tablet"></i></span>
                     <div class="media-body">
-                        <h3>+7 (123) 456-78-90</h3>
+                        <h3>+7 (3513) 12-34-56</h3>
+                        <p>+7 (123) 456-78-90</p>
                         <p>Пн-Пт: 9:00-18:00<br>Сб-Вс: выходной</p>
                     </div>
                 </div>
@@ -195,8 +301,17 @@
                     <span class="contact-info__icon"><i class="ti-email"></i></span>
                     <div class="media-body">
                         <h3>info@jobboard.ru</h3>
-                        <h3>support@jobboard.ru</h3>
-                        <p>Пишите нам в любое время!</p>
+                        <p>support@jobboard.ru</p>
+                        <p>Отвечаем в течение 24 часов</p>
+                    </div>
+                </div>
+                <div class="media contact-info">
+                    <span class="contact-info__icon"><i class="ti-car"></i></span>
+                    <div class="media-body">
+                        <h3>Как добраться</h3>
+                        <p>Остановка "Улица Готвальда"<br>
+                           Автобусы: 3, 5, 12, 21<br>
+                           Бесплатная парковка на территории</p>
                     </div>
                 </div>
             </div>
